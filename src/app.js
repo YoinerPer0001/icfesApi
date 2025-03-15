@@ -15,8 +15,7 @@ const enterPoint = '/api'
 
 app.use(enterPoint, UserRoutes)
 
-app.listen(PORT, () => {
-    console.log(`Server in port ${PORT}`)
+app.listen(PORT, '0.0.0.0', ()=>{
+    console.log("Ejecutandose en el puerto: " + PORT)
 })
-
 

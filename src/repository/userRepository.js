@@ -21,6 +21,11 @@ class UserRepository {
         return response
     }
 
+    async update(id, data){
+        const response = await Users.update(data, {where: {id: id}})
+        return response
+    }
+
 }
 
 export default new UserRepository();

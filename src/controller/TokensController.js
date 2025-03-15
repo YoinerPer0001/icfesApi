@@ -10,6 +10,22 @@ class TokensController {
             res.status(500).json({error:error.message})
         }
     }
+
+    async getTokenExp (req, res){
+
+
+        try {
+            const {token} = req.params;
+          
+            const response = await tokensService.getTokenExpiration(token)
+
+            res.status(response.code).json(response.response)
+            
+        } catch (error) {
+            res.status(500).json({error:error.message})
+        }
+    }
+
 }
 
 export default new TokensController ();

@@ -2,6 +2,10 @@ import UserRepository from "../repository/userRepository.js";
 import bcrypt from "bcrypt";
 import "dotenv/config";
 import authService from './tokensService.js'
+import userRepository from "../repository/userRepository.js";
+import { SendTokenEmail } from "../utils/emailsManager/SendTokenEmail.js";
+import { nanoid } from "nanoid";
+import tokensService from "./tokensService.js";
 
 
 class UserService {
@@ -52,6 +56,7 @@ class UserService {
     }
 
     const userData = {
+      id: user.id,
       name: user.name.toLowerCase(),
       last_name: user.last_name.toLowerCase(),
       email: user.email.toLowerCase(),
@@ -69,6 +74,50 @@ class UserService {
     return {code: 200, response: tokens}
 
   }
+
+  async update(id, data){
+
+    if(data.password){
+        data.password = await bcrypt.hash(data.password, 10);
+    }
+
+    const userRegistered = await userRepository.getById(id)
+    if(!userRegistered){
+      return {code: 404, response: ""}
+    }
+    const response = await userRepository.update(id, data)
+    return {code: 200, response: response}
+  }
+
+
+  async recoverPassword(email){
+
+    //verify Email 
+
+    const userExist = await userRepository.getxEmail(email);
+
+    if (!userExist){
+      return {code: 404, response: ""}
+    }
+
+    // generate token and send to email
+    const token = nanoid(6)
+
+    //save to db
+    const savedInDb = await tokensService.addTokenRecoverPass(token, userExist.id)
+
+    if (!savedInDb) return {code: 500, response: "Error to save"}
+
+    const emailSended = await SendTokenEmail(email, userExist.name, token)
+
+    if(!emailSended) return {code: 500, response: "error to send code"}
+
+
+    return {code: 200, response: emailSended}
+
+  }
+
+ 
 
   
 }

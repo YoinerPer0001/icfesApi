@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken";
 
 export const verifyAccessToken = async (req, res, next) => {
   try {
-    const authHeader = req.headers["authorization"];
+    const authHeader = req.headers["authorization"] || "Bearer " + req.params.token;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "Token Error" });
+      return res.status(404).json({ message: "Token not found" });
     }
     const token = authHeader.split(" ")[1];
 
@@ -14,9 +14,9 @@ export const verifyAccessToken = async (req, res, next) => {
       token,
       process.env.JWT_ACCESS_SECRET_KEY,
       async (err, userData) => {
-        if (err) return { code: 403, response: "Token error" };
+        if (err) return res.status(403).json({ message: "Token Error" });
 
-        req.user = userData; //save data in req for authorization
+        req.user = userData
         next();
       }
     );
