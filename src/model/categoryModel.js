@@ -1,9 +1,9 @@
-import { Model, DataTypes } from "sequelize"
+import { Model, DataTypes, UUID } from "sequelize"
 import db from '../core/db.js'
 
-class Category extends Model {}
+class Categories extends Model {}
 
-Category.init({
+Categories.init({
     id: {
         type: DataTypes.UUID,
         primaryKey : true,
@@ -12,9 +12,13 @@ Category.init({
     name : {
         type: DataTypes.STRING(150),
         allowNull: false
+    },
+    num_questions: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
     
-}, {sequelize: db, modelName: "category"})
+}, {sequelize: db, modelName: "categories"})
 
 
-export default Category;
+export default Categories;

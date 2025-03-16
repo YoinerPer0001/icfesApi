@@ -117,6 +117,12 @@ class UserService {
 
   }
 
+
+  async getById(id){
+    const response = await userRepository.getById(id);
+    return {code: 200, response: response}
+  }
+
  
 
   

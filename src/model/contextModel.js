@@ -1,4 +1,4 @@
-import { Model, DataTypes } from "sequelize"
+import { Model, DataTypes, UUID } from "sequelize"
 import db from '../core/db.js'
 
 class Context extends Model {}

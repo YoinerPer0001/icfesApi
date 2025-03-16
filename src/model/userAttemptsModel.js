@@ -30,14 +30,14 @@ UserAttempts.init({
 
 }, {sequelize: db, modelName: "user_attempts"})
 
-AnswerOptions.hasMany(UserAttempts, {foreignKey: "answer_id", as: "answer"})
+AnswerOptions.hasMany(UserAttempts, {foreignKey: "answer_id", as: "attemp"})
 UserAttempts.belongsTo(AnswerOptions, {foreignKey: "answer_id", as: "answer"})
 
-Question.hasMany(UserAttempts, {foreignKey: "question_id", as: "question"})
+Question.hasMany(UserAttempts, {foreignKey: "question_id", as: "attemp"})
 UserAttempts.belongsTo(Question, {foreignKey: "question_id", as: "question"})
 
-Exams.hasMany(UserAttempts, {foreignKey: "exam_id", as: "exam"})
-UserAttempts.belongsTo(Exams, {foreignKey: "exam_id", as: "exam"})
+Exams.hasMany(UserAttempts, {foreignKey: "exam_id", as: "attemp"})
+UserAttempts.belongsTo(Exams, {foreignKey: "exam_id", as: "exams"})
 
 
 export default UserAttempts;

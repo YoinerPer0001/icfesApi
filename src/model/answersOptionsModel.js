@@ -1,4 +1,4 @@
-import { Model, DataTypes } from "sequelize"
+import { Model, DataTypes , UUID} from "sequelize"
 import db from '../core/db.js'
 import Question from './questionModel.js'
 
@@ -27,9 +27,9 @@ AnswerOptions.init({
 
 }, {sequelize: db, modelName: "answer_options"})
 
-Question.hasMany(AnswerOptions, {foreignKey: 'id_question', as: 'question'})
+Question.hasMany(AnswerOptions, {foreignKey: 'id_question', as: 'answers'})
 
-AnswerOptions.belongsTo(Question, {foreignKey: 'id_question', as: 'question'})
+AnswerOptions.belongsTo(Question, {foreignKey: 'id_question', as: 'answers'})
 
 
 export default AnswerOptions;
