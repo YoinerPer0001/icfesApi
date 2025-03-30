@@ -40,6 +40,13 @@ class ExamsRepository {
           });
         return response
     }
+
+    async delete(id){
+        const response = await Exams.destroy({where: {id:id}})
+        return response
+    }
+
+
 }
 
 export default new ExamsRepository();

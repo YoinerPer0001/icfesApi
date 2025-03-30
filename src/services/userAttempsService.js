@@ -5,7 +5,7 @@ import userAttemptRepository from "../repository/userAttempsRepository.js";
 import examQuestionService from "./examQuestionService.js";
 
 class UserAttempsService {
-  async create(data) {
+  async create(data, user_id) {
     const examExist = await examsService.getById(data.exam_id);
 
     if (examExist.code != 200)
@@ -47,6 +47,31 @@ class UserAttempsService {
 
         await examQuestionService.deleteAnswers(data.exam_id)
 
+        //verificamos si tiene mas de 5 examenes
+        const examList = await examsService.getExamUser(user_id);
+       
+        let listYoung = [];
+        
+        if (examList.response.length > 5) {
+            // Ordenar los exámenes por fecha descendente (más recientes primero)
+            const sortedExams = examList.response.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        
+            // Tomar solo los 5 más recientes
+            listYoung = sortedExams.slice(0, 5);
+            
+           
+
+           for (const exam of examList.response) {
+            const datasen = listYoung.some(val => val.id === exam.id)
+            if(!datasen){
+             const deleted = await userAttemptRepository.deleteExamQuestions(exam.id)
+             if(deleted){
+              await examsService.delete(exam.id)
+             }
+            }
+           }
+        }
+
         return { code: 200, response: "" };
       } catch (error) {
         return { code: 500, response: error.message };
@@ -59,6 +84,8 @@ class UserAttempsService {
 
     return { code: 200, response: response }
   }
+
+  
 }
 
 export default new UserAttempsService();

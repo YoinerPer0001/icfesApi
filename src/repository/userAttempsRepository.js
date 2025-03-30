@@ -45,6 +45,11 @@ class UserAttempsRepository {
     console.log(response)
     return response;
   }
+
+  async deleteExamQuestions(id){
+    const response = await UserAttempts.destroy({where: {exam_id:id}})
+    return response
+}
 }
 
 export default new UserAttempsRepository();

@@ -6,7 +6,8 @@ class UserAttempsController {
     async createAttemp(req, res){
         try {
             const data = req.body
-            const response = await userAttempsService.create(data)
+            console.log(req.user)
+            const response = await userAttempsService.create(data, req.user.data.id)
             return res.status(response.code).json(response.response)
 
         } catch (error) {
