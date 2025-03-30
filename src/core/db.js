@@ -13,7 +13,12 @@ const db = new Sequelize(db_Name, db_user, db_passsword, {
   dialect: "postgres",
   port: db_port,
   timezone: "America/Bogota",
-  
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
 });
 
 try {
