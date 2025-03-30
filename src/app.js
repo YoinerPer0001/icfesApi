@@ -25,7 +25,7 @@ app.use(enterPoint, UserAttempsRoutes)
 app.use(enterPoint, QuestionRoutes)
 app.use(enterPoint, CategoriesRoutes)
 
-app.listen(PORT, '0.0.0.0', ()=>{
+app.listen(PORT, ()=>{
     console.log("Ejecutandose en el puerto: " + PORT)
 })
 
