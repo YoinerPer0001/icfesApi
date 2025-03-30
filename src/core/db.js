@@ -7,11 +7,18 @@ const db_passsword = process.env.DBPASSWORD || "12345";
 const db_host = process.env.DBHOST || "localhost";
 const db_port = process.env.DBPORT || 5432
 
+
 const db = new Sequelize(db_Name, db_user, db_passsword, {
   host: db_host,
   dialect: "postgres",
   port: db_port,
-  timezone : "America/Bogota"
+  timezone: "America/Bogota",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
 });
 
 try {
