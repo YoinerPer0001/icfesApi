@@ -2,7 +2,7 @@ import express from "express";
 import { loginValidator, registerValidator, UpdateValidator } from "../validators/userValidator.js";
 import { EmailValidator, IdValidator, TokenRecoverValidator } from "../validators/general/generalValidators.js";
 import userController from "../controller/userController.js";
-import TokensController from "../controller/tokensController.js";
+import TokensController from "../controller/TokensController.js";
 import {verifyAccessToken, VerifyRefreshToken} from "../middlewares/verifyToken.js"
 import { TokenValidator } from "../validators/userValidator.js";
 
