@@ -21,6 +21,13 @@ class ExamQuestionService {
 
         return {code: 200, response: response}
     }
+
+    async deleteAnswers(id){
+        const response = examsQuestionRepository.deleteExamQuestions(id)
+        if(!response) return {code: 500, response: "error to delete"}
+
+        return {code: 200, response: response}
+    }
 }
 
 export default new ExamQuestionService();

@@ -2,6 +2,7 @@ import examsService from "./examsService.js";
 import questionService from "./questionService.js";
 import answerOptionsService from "./asnwerOptionsService.js";
 import userAttemptRepository from "../repository/userAttempsRepository.js";
+import examQuestionService from "./examQuestionService.js";
 
 class UserAttempsService {
   async create(data) {
@@ -43,6 +44,8 @@ class UserAttempsService {
         await Promise.all(listAttemps);
 
         await examsService.update(data.exam_id, {state: "finished"})
+
+        await examQuestionService.deleteAnswers(data.exam_id)
 
         return { code: 200, response: "" };
       } catch (error) {

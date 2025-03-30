@@ -33,6 +33,11 @@ class ExamQuestionRepository {
     });
     return response;
   }
+
+  async deleteExamQuestions(id){
+      const response = await ExamQuestions.destroy({where: {exam_id:id}})
+      return response
+  }
 }
 
 export default new ExamQuestionRepository();
