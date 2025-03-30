@@ -29,4 +29,4 @@ class TokensController {
 
 }
 
-export default new TokensController ();
+export default new TokensController ();//

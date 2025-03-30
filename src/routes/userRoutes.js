@@ -9,7 +9,9 @@ import { TokenValidator } from "../validators/userValidator.js";
 const UserRoutes = express.Router()
 
 
-// UserRoutes.get('/user/:id', IdValidator)
+//UserRoutes.get('/user/:id', IdValidator)
+
+//jksafnhjkasd
 
 UserRoutes.post('/user/login',loginValidator, userController.login)
 
