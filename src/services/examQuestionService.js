@@ -16,7 +16,7 @@ class ExamQuestionService {
         if(exist.code != 200) return {code: 404, response: "exam not found"}
 
         const response = await examsQuestionRepository.getById(id)
-        console.log(response)
+      
         if(!response) return {code: 500, response: "error to ask"}
 
         return {code: 200, response: response}

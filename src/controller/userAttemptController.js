@@ -16,7 +16,7 @@ class UserAttempsController {
 
     async getByExamId(req, res){
         try {
-            const {id} = req.params
+            const {id} = req.query
             const response = await userAttempsService.getById(id)
             res.status(response.code).json(response.response)
         } catch (error) {

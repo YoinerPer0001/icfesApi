@@ -9,6 +9,14 @@ class CategoryService {
 
         return {code: 200, response: response}
     }
+
+    async getAll(){
+        const response = await categoryRepository.getAll()
+
+        if(!response) return {code: 500, response: ""}
+
+        return {code: 200, response: response}
+    }
 }
 
 export default new CategoryService();

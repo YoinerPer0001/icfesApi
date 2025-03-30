@@ -1,4 +1,4 @@
-import { Model, DataTypes , UUID} from "sequelize"
+import { Model, DataTypes , UUID, UUIDV4} from "sequelize"
 import db from '../core/db.js'
 import Question from './questionModel.js'
 
@@ -9,7 +9,7 @@ AnswerOptions.init({
     id: {
         type: DataTypes.UUID,
         primaryKey : true,
-        defaultValue: UUID
+        defaultValue: UUIDV4
     },
     text : {
         type: DataTypes.TEXT,
@@ -22,6 +22,10 @@ AnswerOptions.init({
 
     id_question: {
         type: DataTypes.UUID,
+    },
+    type: {
+        type: DataTypes.ENUM(['text', 'image']),
+        defaultValue: 'text'
     }
 
 

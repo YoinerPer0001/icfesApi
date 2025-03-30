@@ -1,5 +1,7 @@
 import Exams from "../model/examsModel.js";
 import db from "../core/db.js";
+import { and } from "sequelize";
+import Categories from "../model/categoryModel.js";
 
 class ExamsRepository {
 
@@ -24,6 +26,18 @@ class ExamsRepository {
 
     async getById(id){
         const response = await Exams.findByPk(id)
+        return response
+    }
+
+    async getExamUser(id_user) {
+        const response = await Exams.findAll({
+            where: {
+              user_id: id_user,
+              state: "finished"
+            },
+            attributes: { exclude: ["updatedAt", "course_id"] },
+            include: [{model: Categories, as : "course" , attributes: {exclude: ["createdAt", "updatedAt"]}}]
+          });
         return response
     }
 }

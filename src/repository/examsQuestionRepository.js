@@ -2,6 +2,7 @@ import Exams from "../model/examsModel.js";
 import ExamQuestions from "../model/examsQuestionModel.js";
 import Questions from "../model/questionModel.js";
 import AnswerOptions from "../model/answersOptionsModel.js";
+import Context from "../model/contextModel.js";
 
 class ExamQuestionRepository {
   async create(data, dbTransaction) {
@@ -24,7 +25,7 @@ class ExamQuestionRepository {
         {
           model: Questions,
           as: "question",
-          include: [{ model: AnswerOptions, as: "answers" , attributes: {exclude: ["createdAt", "updatedAt", "is_correct", "id_question"] }}],
+          include: [{model: Context, as: "context"},{ model: AnswerOptions, as: "answers" , attributes: {exclude: ["createdAt", "updatedAt", "is_correct", "id_question"] }}],
           attributes: { exclude: ["createdAt", "updatedAt", "cat_id"] },
         },
       ],

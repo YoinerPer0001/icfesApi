@@ -5,11 +5,13 @@ const db_Name = process.env.DBNAME || "icfesdb";
 const db_user = process.env.DBUSER || "postgres";
 const db_passsword = process.env.DBPASSWORD || "12345";
 const db_host = process.env.DBHOST || "localhost";
+const db_port = process.env.DBPORT || 5432
 
 const db = new Sequelize(db_Name, db_user, db_passsword, {
   host: db_host,
   dialect: "postgres",
-  port: 5432
+  port: db_port,
+  timezone : "America/Bogota"
 });
 
 try {

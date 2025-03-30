@@ -16,6 +16,10 @@ Categories.init({
     num_questions: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    photo:{
+        type: DataTypes.TEXT,
+        allowNull: true
     }
     
 }, {sequelize: db, modelName: "categories"})

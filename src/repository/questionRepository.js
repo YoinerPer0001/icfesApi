@@ -1,11 +1,22 @@
 import { fn } from 'sequelize'
 import Questions from '../model/questionModel.js'
+import db from '../core/db.js'
 
 class QuestionRepository {
 
-    async create(examInfo){
-        const response = await Questions.create(examInfo)
-        return response
+    async create(data, transaction = null){
+       
+        let dbTransaction;
+
+        if(transaction != null){
+            dbTransaction = transaction
+        }else{
+            console.log("nulo transaction")
+            dbTransaction = await db.transaction()
+        }
+        const response = await Questions.create(data, {transaction: dbTransaction});
+        
+        return {response, dbTransaction}
     }
 
     async update(id, data){

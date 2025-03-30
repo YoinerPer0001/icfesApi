@@ -1,3 +1,4 @@
+import Roles from '../model/rolesModel.js'
 import Users from '../model/userModel.js'
 
 class UserRepository {
@@ -9,6 +10,11 @@ class UserRepository {
 
     async getById(id){
         const response = await Users.findByPk(id)
+        return response
+    }
+
+    async getUserById (id){
+        const response = await Users.findByPk(id, { attributes: {exclude: ["createdAt", "updatedAt", "password", "rol_id"]}})
         return response
     }
 

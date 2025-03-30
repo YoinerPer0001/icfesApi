@@ -21,6 +21,18 @@ class UserController {
     }
   }
 
+  async getById(req, res){
+    try {
+
+      const { id } = req.user.data;
+      const response = await userService.getUserById(id)
+      res.status(response.code).json(response.response);
+
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   async update(req, res) {
     try {
       const { id } = req.user.data;
@@ -35,7 +47,7 @@ class UserController {
 
   async SendEmailPasswordRecover(req, res) {
     try {
-      const { email } = req.params;
+      const { email } = req.query;
 
       const response = await userService.recoverPassword(email);
 
@@ -45,6 +57,7 @@ class UserController {
     }
   }
 
+  
 }
 
 export default new UserController();

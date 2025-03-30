@@ -8,6 +8,13 @@ class CategoryRepository {
         return response
     }
 
+    async getAll(){
+        const response = await Category.findAll({attributes: {exclude:["createdAt", "updatedAt"]}})
+        return response
+    }
+
+
+
     async update(id, data){
         const response = await Category.update(data, {where: {id: id}})
         return response

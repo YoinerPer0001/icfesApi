@@ -57,16 +57,25 @@ class ExamsService {
 
       await Promise.all(QuestionPromises);
 
-    //   const UpdateStateExam = await examsRepository.update(response.dataValues.id, {state: "in progress"})
-
-    //   if (!UpdateStateExam) {
-    //     dbTransaction.rollback();
-    //     return { code: 500, response: "error to create" };
-    //   }
-
       await dbTransaction.commit();
+
+      const UpdateStateExam = await examsRepository.update(response.id, {state: "in progress"})
+
+      if (!UpdateStateExam) {
+        dbTransaction.rollback();
+        return { code: 500, response: "error to create" };
+      }
+
       
-      return { code: 200, response: response };
+
+      const examInfo = await examQuestionService.getExamInformation(response.id)
+
+      const data = {
+        exam: response,
+        questions: examInfo.response
+      }
+      
+      return { code: 200, response: data };
     } catch (error) {
       dbTransaction.rollback();
       return { code: 500, response: error.message };
@@ -82,6 +91,13 @@ class ExamsService {
 
   async getById(id){
     const response = await examsRepository.getById(id)
+    if(!response) return {code: 404, response: "error not found"}
+
+    return {code: 200, response: response}
+  }
+
+  async getExamUser(id_user){
+    const response = await examsRepository.getExamUser(id_user)
     if(!response) return {code: 404, response: "error not found"}
 
     return {code: 200, response: response}

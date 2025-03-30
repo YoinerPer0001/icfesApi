@@ -32,7 +32,7 @@ class UserService {
         throw new Error("Service: Error to create");
       }
 
-      return { code: 200, response };
+      return { code: 200, response: response.id };
 
     }else{
     
@@ -77,6 +77,7 @@ class UserService {
 
   async update(id, data){
 
+    
     if(data.password){
         data.password = await bcrypt.hash(data.password, 10);
     }
@@ -86,7 +87,7 @@ class UserService {
       return {code: 404, response: ""}
     }
     const response = await userRepository.update(id, data)
-    return {code: 200, response: response}
+    return {code: 200, response: response[0]}
   }
 
 
@@ -123,8 +124,10 @@ class UserService {
     return {code: 200, response: response}
   }
 
- 
-
+  async getUserById(id){
+    const response = await userRepository.getUserById(id);
+    return {code: 200, response: response}
+  }
   
 }
 

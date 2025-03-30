@@ -22,6 +22,7 @@ UserAttempts.init({
 
     answer_id: {
         type: DataTypes.UUID,
+        allowNull: true
     },
 
     is_correct: {

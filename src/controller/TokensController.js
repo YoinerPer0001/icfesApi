@@ -4,7 +4,8 @@ class TokensController {
 
     async renovateAccess(req, res){
         try {
-            const response = await tokensService.generateAccessToken(req.user)
+            console.error("ACESSO RENOVADOOOOOOOOO")
+            const response = await tokensService.generateAccessToken(req.user.data)
             return res.status(200).json({accessToken : response})
         } catch (error) {
             res.status(500).json({error:error.message})
@@ -15,7 +16,7 @@ class TokensController {
 
 
         try {
-            const {token} = req.params;
+            const {token} = req.query;
           
             const response = await tokensService.getTokenExpiration(token)
 

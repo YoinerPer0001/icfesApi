@@ -1,4 +1,4 @@
-import { Model, DataTypes, UUID } from "sequelize"
+import { Model, DataTypes, UUID, UUIDV4 } from "sequelize"
 import db from '../core/db.js'
 import Context from './contextModel.js'
 import Category from './categoryModel.js'
@@ -9,7 +9,7 @@ Questions.init({
     id: {
         type: DataTypes.UUID,
         primaryKey : true,
-        defaultValue: UUID
+        defaultValue: UUIDV4
     },
     text : {
         type: DataTypes.TEXT,

@@ -4,12 +4,12 @@ import tokensRepository from '../repository/tokensRepository.js'
 
 class AuthService {
 
-    async generateAccessToken(data, time = "4h") {
+    async generateAccessToken(data, time = "7d") {
         const accessToken = jwt.sign({data},process.env.JWT_ACCESS_SECRET_KEY, {expiresIn: time})
         return accessToken
     }
 
-    async generateRefreshToken(data, time = "7d") {
+    async generateRefreshToken(data, time = "30d") {
         const refreshToken = jwt.sign({data},process.env.JWT_REFRESH_SECRET_KEY, {expiresIn: time})
         return refreshToken
     }
@@ -35,10 +35,16 @@ class AuthService {
         if(!tokenDb) return {code: 404, response:""}
         const nowDate = new Date()
         const tokenDate = new Date(tokenDb.dataValues.time_expiration)
-        console.log(tokenDate)
-        console.log(nowDate)
+     
+   
         if(nowDate < tokenDate){
-            return {code: 200, response:""}
+          
+            const accessToken = await this.generateAccessToken(tokenDb.user)
+            const info = {
+                user_id:tokenDb.user_id,
+                accessToken
+            }
+            return {code: 200, response:info}
 
         }else{
             return {code: 403, response:"expired token"}
